@@ -1,0 +1,123 @@
+# coding: utf-8
+import json
+from typing import Dict, List  # noqa: F401
+
+from fastapi import (  # noqa: F401
+    APIRouter,
+    Body,
+    Cookie,
+    Depends,
+    Form,
+    Header,
+    Path,
+    Query,
+    Response,
+    Security,
+    status,
+    HTTPException
+)
+
+from openapi_server.models.extra_models import TokenModel  # noqa: F401
+{# 注释掉
+{% for item in data -%}
+{% if item.content.get('requestBody','')!='' -%}
+from openapi_server.models.{{item.content.get('requestBody','').get('content','').get('application/json','').get('schema','').get('$ref','')[21:] }} import {{item.content.get('requestBody','').get('content','').get('application/json','').get('schema','').get('$ref','')[21:] | str2BigHump }}
+{% endif -%}
+{% endfor %} #}
+
+from openapi_server.models.{{tag_name}} import {{tag_name|str2BigHump}}
+from openapi_server.models.response_page import ResponsePage
+from openapi_server.models.response_c_u_d import ResponseCUD
+from openapi_server.models.response_del import ResponseDel
+
+from ..dao.crud import Crud
+from ..dao.database import SessionLocal, map_tables
+from sqlalchemy.orm import Session
+
+router = APIRouter()
+model = map_tables.{{tag_name}}
+schema = {{tag_name|str2BigHump}}
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
+{% for item in data %}
+@router.{{item.method}}(
+    "{{item.key}}",
+    responses={
+        200: {"model": {% if item.method == "get" and item.key[-3:-1]!="id" -%} ResponsePage{% elif item.method == "delete" -%} ResponseDel{% else -%} ResponseCUD{% endif -%}, "description": "成功"},
+    },
+    tags=["{{item.mytag}}"],
+    summary="{{item.content.summary}}",
+)
+async def {{item.method+'_'+item.key.replace('/{','_').replace('/','').replace('}','')}}(
+    {% for param in item.content.parameters -%}
+    {{param.name}}: str = {{ param.in|str2BigHump }}(None, description="{{param.description}}"),
+    {% endfor -%}
+
+    {% if item.content.get('requestBody','')!='' -%}
+    {{item.content.get('requestBody','').get('content','').get('application/json','').get('schema','').get('$ref','')[21:] }}: {{item.content.get('requestBody','').get('content','').get('application/json','').get('schema','').get('$ref','')[21:] | str2BigHump }} = Body(None, description=""),
+    {% endif -%}
+
+    db: Session = Depends(get_db)
+) ->{% if item.method == "get" and item.key[-3:-1]=="id"  -%} ResponseCUD:
+    {# 获取详情 get detail -#}
+    """{{item.content.summary}}"""
+    crud = Crud(session=db, model=model, schema=schema)
+    res = crud.get_detail(id=id)
+    if res is None:
+        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+    return dict(code=200, data=res)
+    {% elif item.method == "get" and item.key[-3:-1]!="id" %} ResponsePage:
+    {# page查询 -#}
+     """{{item.content.summary}}"""
+    try:
+        if where:
+            # 如果where 不是json格式抛出异常
+            where = json.loads(where)
+        # 查询
+        crud = Crud(session=db, model=model, schema=schema)
+        res = crud.get_page_list(current_page=int(current_page), page_size=int(page_size), where=where, order=order)
+        return dict(code=200, data=res)
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'where参数格式错误:  {e}'))
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'请求错误： {e}'))
+    {% elif item.method == "post" %} ResponseCUD:
+    {# 添加数据 -#}
+     """{{item.content.summary}}"""
+    crud = Crud(session=db, model=model, schema=schema)
+    res = crud.create(record={{tag_name}})
+    return dict(code=200, data=res)
+    {% elif item.method == "put" %} ResponseCUD:
+    {# 修改数据 -#}
+     """{{item.content.summary}}"""
+    crud = Crud(session=db, model=model, schema=schema)
+    res = crud.get_detail(id={{tag_name}}.id)
+    if res is None:
+        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+    res = crud.update(id={{tag_name}}.id, record={{tag_name}})
+    return dict(code=200, data=res)
+    {% elif item.method == "delete" %} ResponseDel:
+    {# 删除数据 -#}
+     """{{item.content.summary}}"""
+    crud = Crud(session=db, model=model, schema=schema)
+    res = crud.delete(id=id)
+    if res == 0:
+        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+    return dict(code=200)
+    {% endif %}
+
+{% endfor %}
+
+
+
+
+

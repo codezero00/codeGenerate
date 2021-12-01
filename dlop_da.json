@@ -1,0 +1,4516 @@
+{
+"openapi": "3.0.1",
+"info": {
+"title": "数据资产",
+"description": "",
+"version": "1.0.0"
+},
+"tags": [
+{
+"name": "table_permission_apply"
+},
+{
+"name": "auditor"
+},
+{
+"name": "tech_metadata"
+},
+{
+"name": "data_index_permission"
+},
+{
+"name": "data_blood"
+},
+{
+"name": "blood_detail"
+},
+{
+"name": "demo"
+},
+{
+"name": "algorithms"
+},
+{
+"name": "dataclassifications"
+},
+{
+"name": "datamasks"
+},
+{
+"name": "datamasks_alg"
+},
+{
+"name": "secrecylevel"
+},
+{
+"name": "tags"
+}
+],
+"paths": {
+"/auditor/{id}": {
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "auditor",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"auditor"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "auditor",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"auditor"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/auditor"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/dataclassifications": {
+"post": {
+"summary": "新增",
+"x-apifox-folder": "dataclassifications",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"dataclassifications"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "dataclassifications",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"dataclassifications"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "dataclassifications",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"dataclassifications"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/datamasks_alg": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "datamasks_alg",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks_alg"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "datamasks_alg",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks_alg"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "datamasks_alg",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks_alg"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/table_permission_apply": {
+"post": {
+"summary": "新增",
+"x-apifox-folder": "table_permission_apply",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"table_permission_apply"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200,
+"data": {
+"id": "9E387BC5-bDf3-40dA-dfb1-04BD8EeC2c51",
+"createuserid": "8dc6f7f5-5eFf-Aee7-c098-98D7DfDBB9cc",
+"createtime": "2012-06-26 20:55:32",
+"updateuserid": "A3A3bcBd-fec1-68A5-E146-3F70dEFbfDA8",
+"updatetime": "2018-11-04 17:32:43",
+"apply_code": "D145cFFE-2Ae3-9eFA-aC97-2E81bc2bC0fa",
+"audit_message": "Ut eu ullamco nostrud",
+"audit_at": "2011-01-28 19:16:13",
+"auditor_id": "22cb818c-Ee4A-4c1A-eBd2-BEAee93DD4Fa",
+"apply_at": "2021-11-04 20:55:34",
+"apply_status": "quis",
+"usage_description": "fugiat nisi non cupidatat",
+"applyer": "officia aliquip",
+"column_permission": "sint esse enim",
+"table_permission": "elit velit irure eu ut",
+"resource_type": "officia",
+"resource_name": "积查京战处中",
+"resource_id": "1CFAF389-dCaD-b9B5-ED19-bCADaA638Fcc"
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "table_permission_apply",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"table_permission_apply"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": "200",
+"data": {
+"page": {
+"item_count": 15236,
+"page_count": 1524,
+"page_index": 1,
+"page_size": 10,
+"offset": 0,
+"limit": 10
+},
+"res": [
+{
+"id": "BE77c5f0-8D2A-4Cc8-D8Cc-F9c45bF94FC8",
+"createuserid": "c157cc9A-1792-70bB-DfFF-2CFe1cEAC771",
+"createtime": "1982-08-06 14:35:45",
+"updateuserid": "dbd8013D-5696-4fBa-c6Cc-DF51FE6Ca053",
+"updatetime": "1989-09-08 06:08:16",
+"apply_code": "F1Ac1f19-c82A-DBcB-9F47-aCB6A1Dbfe83",
+"audit_message": "officia",
+"audit_at": "2010-04-24 12:12:01",
+"auditor_id": "7Ae33bcF-D5CE-FCe5-9375-13EbcA4C4eE6",
+"apply_at": "1987-07-01 03:55:30",
+"apply_status": "quis",
+"usage_description": "do adipisicing",
+"applyer": "non do ullamco elit",
+"column_permission": "Ut ex",
+"table_permission": "aliquip fugiat ullamco",
+"resource_type": "veniam ipsum dolor",
+"resource_name": "置也感构道合",
+"resource_id": "7ef4CDC1-fA82-65EA-eff2-faeb8be58E0E"
+}
+]
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "table_permission_apply",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"table_permission_apply"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200,
+"data": {
+"id": "2aB5ee99-f5a1-48d3-2B12-b486215fCf3B",
+"createuserid": "1FED327b-2f43-eCea-DADC-A1e4a8f029b6",
+"createtime": "1970-12-24 00:37:08",
+"updateuserid": "5f2F9DfB-E924-9D6A-563b-033AE9BABeEc",
+"updatetime": "1991-07-28 21:12:41",
+"apply_code": "64645749-CeED-F7eE-135f-c797E1Db46Af",
+"audit_message": "sunt consequat ullamco laborum",
+"audit_at": "2014-04-17 12:43:05",
+"auditor_id": "2C5D261D-e7bf-F65d-dE55-4C16bBAAa973",
+"apply_at": "1991-02-18 19:44:24",
+"apply_status": "veniam aliqua Excepteur magna",
+"usage_description": "irure consequat ut dolor",
+"applyer": "ex",
+"column_permission": "eiusmod Excepteur cupidatat tempor sint",
+"table_permission": "Lorem ullamco",
+"resource_type": "adipisicing veniam",
+"resource_name": "回直理写流期",
+"resource_id": "5F3Beb4C-Ae3D-7863-e7b2-49bdBcA2F572"
+}
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"/data_index_permission": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "data_index_permission",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_index_permission"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "data_index_permission",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_index_permission"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "data_index_permission",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_index_permission"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/data_blood": {
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "data_blood",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_blood"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/data_blood"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "data_blood",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_blood"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/data_blood"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_blood"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "data_blood",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_blood"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/data_blood"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_blood"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/tags/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "tags",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tags"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tags"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "tags",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tags"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/blood_detail": {
+"post": {
+"summary": "新增",
+"x-apifox-folder": "blood_detail",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"blood_detail"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/blood_detail"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_blood"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "blood_detail",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"blood_detail"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/blood_detail"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "blood_detail",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"blood_detail"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/blood_detail"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/blood_detail"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/algorithms/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "algorithms",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"algorithms"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/algorithms"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "algorithms",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"algorithms"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/tech_metadata": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "tech_metadata",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tech_metadata"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "tech_metadata",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tech_metadata"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "tech_metadata",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tech_metadata"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/data_blood/{id}": {
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "data_blood",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_blood"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "data_blood",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_blood"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_blood"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/datamasks_alg/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "datamasks_alg",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks_alg"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks_alg"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "datamasks_alg",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks_alg"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/demo": {
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "demo",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"demo"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "demo",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"demo"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "demo",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"demo"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/datamasks/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "datamasks",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "datamasks",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/auditor": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "auditor",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"auditor"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/auditor"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/auditor"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "auditor",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"auditor"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/auditor"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200,
+"data": {
+"page": {
+"item_count": 15236,
+"page_count": 1524,
+"page_index": 1,
+"page_size": 10,
+"offset": 0,
+"limit": 10
+},
+"res": [
+{
+"id": "95eF8E22-fAAA-CbdA-B2b5-2F51DDfD770C",
+"createuserid": "6b194cd4-4b85-E8De-ebB5-71f8BB35DeDe",
+"createtime": "1991-08-16 12:05:22",
+"updateuserid": "dFA5cdEd-178c-2ED5-E0d6-E36b5Ca9D4E5",
+"updatetime": "1983-06-26 20:01:53",
+"cam_user_id": "BBB3AF2c-78c0-Dca2-e1DB-8daDd1E4b2Eb",
+"tel": "18126787138",
+"email": "b.eehxemkq@qq.com"
+},
+{
+"id": "481Ea09f-50de-Bf2A-2EAe-1cDde10cbED6",
+"createuserid": "D3E05f3c-12FD-Cc86-23c2-Cf5f24a7384e",
+"createtime": "1996-05-04 19:37:16",
+"updateuserid": "d8F745F0-fd85-BdB9-dEea-6dBE3b59eBF7",
+"updatetime": "2014-12-09 12:11:29",
+"cam_user_id": "5fe11F5c-78a2-21A4-C3dF-7D69927478fB",
+"tel": "13314798413",
+"email": "i.wiqsdxetu@qq.com"
+},
+{
+"id": "afFdA871-0d7b-72D8-96a7-937deca7Ebc9",
+"createuserid": "5B8F1CDd-65ff-41E6-bcbe-2D256CA5566E",
+"createtime": "1999-06-23 03:57:31",
+"updateuserid": "2a1bA2fc-21Af-162C-8bFf-7A6fCbbb4d8F",
+"updatetime": "1984-09-20 18:02:09",
+"cam_user_id": "4D6e9B87-63aD-be4d-F30B-b6bFCDFc58D1",
+"tel": "18669787834",
+"email": "t.ecfrlddj@qq.com"
+}
+]
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "auditor",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"auditor"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/auditor"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/auditor"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200,
+"data": {
+"id": "A4b52e2e-C654-b7B7-36b6-E26eF1B63f2D",
+"createuserid": "fc2D0BC0-Acd7-E7f4-eF79-75eE1dfb081D",
+"createtime": "1979-05-13 11:04:24",
+"updateuserid": "D98fee62-39d1-8F8c-bcCA-Cccb312cCD1c",
+"updatetime": "1975-03-12 15:55:46",
+"cam_user_id": "34Ac5BbB-aFBF-B85A-27A5-87c292D934cd",
+"tel": "18664902488",
+"email": "g.tyrenemv@qq.com"
+}
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"/data_index_permission/{id}": {
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "data_index_permission",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_index_permission"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "data_index_permission",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"data_index_permission"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/data_index_permission"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/algorithms": {
+"post": {
+"summary": "新增",
+"x-apifox-folder": "algorithms",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"algorithms"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/algorithms"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/algorithms"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "algorithms",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"algorithms"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/algorithms"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/algorithms"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "algorithms",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"algorithms"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/algorithms"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/tags": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "tags",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tags"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/tags"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tags"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "tags",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tags"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/tags"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "tags",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tags"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/tags"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tags"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/tech_metadata/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "tech_metadata",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tech_metadata"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/tech_metadata"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "tech_metadata",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"tech_metadata"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/datamasks": {
+"put": {
+"summary": "修改",
+"x-apifox-folder": "datamasks",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/datamasks"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"post": {
+"summary": "新增",
+"x-apifox-folder": "datamasks",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/datamasks"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/datamasks"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "datamasks",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"datamasks"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/datamasks"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/blood_detail/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "blood_detail",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"blood_detail"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/blood_detail"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "blood_detail",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"blood_detail"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/secrecylevel/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "secrecylevel",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"secrecylevel"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "secrecylevel",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"secrecylevel"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/secrecylevel": {
+"post": {
+"summary": "新增",
+"x-apifox-folder": "secrecylevel",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"secrecylevel"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "列表查询",
+"x-apifox-folder": "secrecylevel",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"secrecylevel"
+],
+"parameters": [
+{
+"name": "current_page",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "page_size",
+"in": "query",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "where",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+},
+{
+"name": "order",
+"in": "query",
+"description": "",
+"required": false,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"type": "object",
+"properties": {
+"page": {
+"$ref": "#/components/schemas/page"
+},
+"res": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+}
+},
+"required": [
+"page",
+"res"
+]
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"put": {
+"summary": "修改",
+"x-apifox-folder": "secrecylevel",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"secrecylevel"
+],
+"parameters": [],
+"requestBody": {
+"content": {
+"application/json": {
+"schema": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+}
+}
+},
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/secrecylevel"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/table_permission_apply/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "table_permission_apply",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"table_permission_apply"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200,
+"data": {
+"id": "655db0b9-f6C6-d327-4b3a-7CAd2b9cbAcB",
+"createuserid": "44edf3B1-31CC-916C-2fb7-fE8Ac4B5a0de",
+"createtime": "1995-03-10 07:50:30",
+"updateuserid": "fc6fdB33-259B-4b3C-CA30-Dec9872d2B7E",
+"updatetime": "1985-08-23 01:01:58",
+"apply_code": "4156C1De-c6Ec-eE36-7724-4719c6C849D1",
+"audit_message": "et anim",
+"audit_at": "2021-06-07 02:04:41",
+"auditor_id": "E269B1A5-3bD5-D9e0-a74C-6ccE9Fec856c",
+"apply_at": "2010-02-06 22:15:24",
+"apply_status": "adipisicing dolore",
+"usage_description": "id consequat labore",
+"applyer": "anim",
+"column_permission": "tempor irure est",
+"table_permission": "ut nostrud",
+"resource_type": "non adipisicing reprehenderit elit",
+"resource_name": "斗回术花使程",
+"resource_id": "9A3EDdDe-CEe8-AFf4-0de9-70dbbe115ffc"
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "table_permission_apply",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"table_permission_apply"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {
+"1": {
+"summary": "成功示例",
+"value": {
+"code": 200
+}
+}
+}
+}
+}
+}
+}
+}
+},
+"/demo/{id}": {
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "demo",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"demo"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "demo",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"demo"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/table_permission_apply"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+},
+"/dataclassifications/{id}": {
+"get": {
+"summary": "查询详情",
+"x-apifox-folder": "dataclassifications",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"dataclassifications"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+},
+"data": {
+"$ref": "#/components/schemas/dataclassifications"
+}
+},
+"required": [
+"code",
+"data"
+]
+},
+"examples": {}
+}
+}
+}
+}
+},
+"delete": {
+"summary": "删除",
+"x-apifox-folder": "dataclassifications",
+"x-apifox-status": "developing",
+"deprecated": false,
+"description": "",
+"tags": [
+"dataclassifications"
+],
+"parameters": [
+{
+"name": "id",
+"in": "path",
+"description": "",
+"required": true,
+"schema": {
+"type": "string"
+}
+}
+],
+"responses": {
+"200": {
+"description": "成功",
+"content": {
+"application/json": {
+"schema": {
+"type": "object",
+"properties": {
+"code": {
+"type": "integer"
+}
+},
+"required": [
+"code"
+]
+},
+"examples": {}
+}
+}
+}
+}
+}
+}
+},
+"components": {
+"schemas": {
+"datamasks_alg": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"mask_id": {
+"type": "string"
+},
+"classification_rule_id": {
+"type": "string"
+},
+"mask_algorithm_id": {
+"type": "string"
+},
+"strategy_id": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"strategy_id",
+"mask_algorithm_id",
+"classification_rule_id",
+"mask_id"
+],
+"x-apifox-folder": "数据安全"
+},
+"tree_children2": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"pid": {
+"type": "string"
+},
+"label": {
+"type": "string"
+},
+"code": {
+"type": "string"
+},
+"children": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/tree_children3"
+}
+}
+},
+"required": [
+"id",
+"pid",
+"label",
+"code",
+"children"
+],
+"x-apifox-folder": "公用"
+},
+"algorithms": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"algorithm_name": {
+"type": "string"
+},
+"algorithm_parameters": {
+"type": "string"
+},
+"algorithm_source": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"en_name": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"en_name",
+"description",
+"algorithm_source",
+"algorithm_parameters",
+"algorithm_name"
+],
+"x-apifox-folder": "数据安全"
+},
+"datamasks": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"maskname": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"enable": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"maskname",
+"description",
+"enable"
+],
+"x-apifox-folder": "数据安全"
+},
+"tree": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"pid": {
+"type": "string"
+},
+"label": {
+"type": "string"
+},
+"code": {
+"type": "string"
+},
+"children": {
+"type": "array",
+"items": {
+"$ref": "#/components/schemas/tree_children2"
+}
+}
+},
+"required": [
+"id",
+"pid",
+"label",
+"code",
+"children"
+],
+"x-apifox-folder": "公用"
+},
+"secrecylevel": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"sremark": {
+"type": "string"
+},
+"sname": {
+"type": "string"
+},
+"slevel": {
+"type": "integer"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"slevel",
+"sname",
+"sremark"
+],
+"x-apifox-folder": "数据安全"
+},
+"page": {
+"type": "object",
+"properties": {
+"item_count": {
+"type": "integer"
+},
+"page_count": {
+"type": "integer"
+},
+"page_index": {
+"type": "integer"
+},
+"page_size": {
+"type": "integer"
+},
+"offset": {
+"type": "integer"
+},
+"limit": {
+"type": "integer"
+}
+},
+"required": [
+"item_count",
+"page_count",
+"page_index",
+"page_size",
+"offset",
+"limit"
+],
+"x-apifox-folder": "公用"
+},
+"data_blood": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"resource_id": {
+"type": "string",
+"title": "资源编号"
+},
+"blood_type": {
+"type": "string",
+"title": "血缘类型（表级血缘，字段血缘）"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"resource_id",
+"blood_type"
+],
+"x-apifox-folder": "数据权限"
+},
+"tags": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"tagname": {
+"type": "string"
+},
+"remark": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"remark",
+"tagname"
+],
+"x-apifox-folder": "数据安全"
+},
+"tech_metadata": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"ddlcreatetime_at": {
+"type": "string"
+},
+"database_name": {
+"type": "string"
+},
+"table_size": {
+"type": "string"
+},
+"comments": {
+"type": "string"
+},
+"column_count": {
+"type": "string"
+},
+"table_name": {
+"type": "string"
+},
+"resource_id": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"ddlcreatetime_at",
+"database_name",
+"table_size",
+"comments",
+"column_count",
+"table_name",
+"resource_id"
+],
+"x-apifox-folder": "数据权限"
+},
+"table_permission_apply": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"apply_code": {
+"type": "string",
+"title": "申请单号"
+},
+"resource_id": {
+"type": "string",
+"title": "资源编号"
+},
+"resource_name": {
+"type": "string",
+"title": "资源名称"
+},
+"resource_type": {
+"type": "string",
+"title": "资源类型"
+},
+"table_permission": {
+"type": "string",
+"title": "表权限"
+},
+"column_permission": {
+"type": "string",
+"title": "列权限（查询）"
+},
+"applyer": {
+"type": "string",
+"title": "申请人"
+},
+"usage_description": {
+"type": "string",
+"title": "使用场景说明"
+},
+"apply_status": {
+"type": "string",
+"title": "申请状态（待审批,审批通过,审批驳回）"
+},
+"apply_at": {
+"type": "string",
+"title": "申请时间"
+},
+"auditor_id": {
+"type": "string",
+"title": "审批人"
+},
+"audit_at": {
+"type": "string",
+"title": "审批时间"
+},
+"audit_message": {
+"type": "string",
+"title": "审批意见"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"apply_code",
+"audit_message",
+"audit_at",
+"auditor_id",
+"apply_at",
+"apply_status",
+"usage_description",
+"applyer",
+"column_permission",
+"table_permission",
+"resource_type",
+"resource_name",
+"resource_id"
+],
+"x-apifox-folder": "数据权限"
+},
+"blood_detail": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"up_blood_id": {
+"type": "string",
+"title": "上级血缘"
+},
+"down_blood_id": {
+"type": "string",
+"title": "下级血缘"
+},
+"data_blood_id": {
+"type": "string",
+"title": "血缘信息编号"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"up_blood_id",
+"down_blood_id",
+"data_blood_id"
+],
+"x-apifox-folder": "数据权限"
+},
+"tree_children3": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"pid": {
+"type": "string"
+},
+"label": {
+"type": "string"
+},
+"code": {
+"type": "string"
+}
+},
+"required": [
+"id",
+"pid",
+"label",
+"code"
+],
+"x-apifox-folder": "公用"
+},
+"data_index_permission": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"rule_name": {
+"type": "string",
+"title": "规则名称"
+},
+"rule_type": {
+"type": "string",
+"title": "类型（标签，分类，密级）"
+},
+"rule_range": {
+"type": "string",
+"title": "范围（根据类型选择相应范围）"
+},
+"cam_user_id": {
+"type": "string",
+"title": "用户编号（目录所授权的用户）"
+},
+"is_sx": {
+"type": "integer",
+"title": "是否生效"
+},
+"remark": {
+"type": "string",
+"title": "描述"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"rule_name",
+"rule_type",
+"rule_range",
+"cam_user_id",
+"is_sx",
+"remark"
+],
+"x-apifox-folder": "数据权限"
+},
+"dataclassifications": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"classification_type": {
+"type": "string"
+},
+"secrecy_level": {
+"type": "string"
+},
+"classify_name": {
+"type": "string"
+},
+"rule_method": {
+"type": "string"
+},
+"description": {
+"type": "string"
+},
+"content_expression": {
+"type": "string"
+},
+"column_expression": {
+"type": "string"
+},
+"commit_expression": {
+"type": "string"
+},
+"status": {
+"type": "integer"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"status",
+"commit_expression",
+"column_expression",
+"content_expression",
+"description",
+"rule_method",
+"classify_name",
+"secrecy_level",
+"classification_type"
+],
+"x-apifox-folder": "数据安全"
+},
+"auditor": {
+"type": "object",
+"properties": {
+"id": {
+"type": "string"
+},
+"createuserid": {
+"type": "string"
+},
+"createtime": {
+"type": "string"
+},
+"updateuserid": {
+"type": "string"
+},
+"updatetime": {
+"type": "string"
+},
+"cam_user_id": {
+"type": "string",
+"title": "cam人员编号"
+},
+"tel": {
+"type": "string",
+"title": "手机号码"
+},
+"email": {
+"type": "string",
+"title": "电子邮箱信息"
+}
+},
+"required": [
+"id",
+"createuserid",
+"createtime",
+"updateuserid",
+"updatetime",
+"cam_user_id",
+"tel",
+"email"
+],
+"x-apifox-folder": "数据权限"
+},
+"page_request": {
+"type": "object",
+"properties": {
+"current_page": {
+"type": "integer"
+},
+"page_size": {
+"type": "integer"
+},
+"where": {
+"type": "object",
+"properties": {
+"test": {
+"type": "string"
+},
+"params": {
+"type": "object",
+"properties": {}
+}
+},
+"required": [
+"test",
+"params"
+]
+},
+"order": {
+"type": "string"
+}
+},
+"required": [
+"current_page",
+"page_size",
+"where",
+"order"
+],
+"x-apifox-folder": "公用"
+}
+}
+}
+}
