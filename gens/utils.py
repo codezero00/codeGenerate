@@ -49,7 +49,7 @@ def openapiType2pydanticType(text):
                 "integer": "int",
                 "boolean": "bool",
                 "array"  : "List[Any]",
-                "object" : "Dict[Any]",
+                "object" : "Dict",
                 "number" : "int",
                 "any"    : "Any"
                 }

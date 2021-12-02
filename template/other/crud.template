@@ -1,0 +1,87 @@
+from sqlalchemy import text
+from .utils import Page, next_id, data_dict_pares_tree
+
+# from . import models, schemas
+
+
+class Crud:
+    def __init__(self, session, model, schema):
+        self.__MODEL = model  # 将scapp model 赋值给 __MODEL 减少代码改动量
+        self.__SCHEMA = schema  # ScappSchema Schema 赋值给 __SCHEMA 减少代码改动量
+        self.__SESSION = session
+
+    def get_detail(self, id: str):
+        one_res = self.__SESSION.query(self.__MODEL).filter(self.__MODEL.id == id).first()
+        # schema = self.__SCHEMA.from_orm(one_res)
+        schema = one_res
+        return schema
+
+    def get_page_list(self, current_page: int, page_size: int, where: dict, order: str):
+        """
+        where例子 ： {"text":"name like '%' :p1 '%' ","params":{"p1":"t"}}  注意空格
+        """
+        # 获取查询总条数值
+        _text, _params, _order = '', '', 'id desc'
+        if where:
+            _text = where.get('text', '')  # 获取 where 字典 text值
+            _params = where.get('params', '')  # 获取 where 字典 params值
+        if order:
+            _order = order
+        num = self.__SESSION.query(self.__MODEL).filter(text(_text)).params(_params).count()
+        p = Page(num, int(current_page), int(page_size))  # 构造page类
+        if num == 0:
+            return dict(page=p.GetDict, res=[])
+        else:
+            # 实例化ScappSchema 用已继承ma.ModelSchema类的自定制类生成序列化类 many=True 可以反序列化多条 many=False 只能反序列化一条
+            list_res = self.__SESSION.query(self.__MODEL) \
+                .filter(text(_text)) \
+                .params(_params) \
+                .order_by(text(_order)) \
+                .limit(p.limit) \
+                .offset(p.offset) \
+                .all()
+
+            # 反序列化
+            # schema = self.__SCHEMA.from_orm(one_res)
+            return dict(page=p.GetDict, res=list_res)
+
+    def create(self, record):
+        record.id = next_id()
+        delattr(record, 'createtime')  # 删除createtime属性
+        delattr(record, 'updatetime')  # 删除updatetime属性
+        newRecord = self.__MODEL(**record.dict())
+        self.__SESSION.add(newRecord)
+        self.__SESSION.commit()
+        self.__SESSION.refresh(newRecord)
+        return newRecord
+
+    def update(self, id, record):
+        """
+        修改一条数据
+        :param id:
+        :param data:
+        :return:
+        """
+        delattr(record, 'createtime')  # 删除createtime属性
+        delattr(record, 'updatetime')  # 删除updatetime属性
+        self.__SESSION.query(self.__MODEL).filter(self.__MODEL.id == id).update(record.dict())
+        self.__SESSION.commit()
+        return record
+
+    def delete(self, id):
+        """
+        删除一条数据
+        :param id:
+        :return:
+        """
+        res = self.__SESSION.query(self.__MODEL).filter(self.__MODEL.id == id).delete()
+        self.__SESSION.commit()
+        return res
+
+    def get_tree(self):
+        """
+        查询树结构数据
+        """
+        list_res = self.__SESSION.query(self.__MODEL).all()
+        res = data_dict_pares_tree(list_res)
+        return res

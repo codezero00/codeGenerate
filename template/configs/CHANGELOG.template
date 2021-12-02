@@ -1,0 +1,11 @@
+添加开发中心相关接口
+添加分页查询 where 和orderby 参数
+使用方法：
+where："column = 'xxx' and cloumn= 1"
+orderBy: 'column asc/desc'
+
+
+
+2019.02.15:
+metav2 修改 page 查询调试无where条件bug
+

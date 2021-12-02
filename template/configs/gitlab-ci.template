@@ -1,0 +1,67 @@
+image: docker:stable # 指定容器镜像
+
+
+variables:
+   DOCKER_HOST: tcp://172.16.4.110:2375
+   VERSION: v.1.0
+   OBJNAME: dp_backend
+   SQLALCHEMY_DATABASE_URL: mysql+mysqlconnector://root:zyjs2018!@172.16.4.110:3306/dlop_dp
+   PORT: 7011
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script: 
+    # - sleep 1h
+    - echo "start Building the ${OBJNAME}:${VERSION}"
+    - docker version
+    - docker -H $DOCKER_HOST build -t ${OBJNAME}:${VERSION} .
+  tags:
+    - h150 # 必须要有，指定runner tag
+
+test:
+  stage: test
+  script: 
+    - echo "Running tests"
+    - cid=$(docker ps -qa --filter name=${OBJNAME}_${CI_COMMIT_REF_NAME}_${VERSION})
+    - if [ -n "${cid}" ];then docker rm -f ${cid};else echo "cid is null";fi
+    - docker -H $DOCKER_HOST run --env SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}  --name ${OBJNAME}_${CI_COMMIT_REF_NAME}_${VERSION} -p ${PORT}:7000 -d ${OBJNAME}:$VERSION
+  environment:
+    name: ${OBJNAME}_test_${VERSION}
+    url: http://172.16.4.110:${PORT}/docs
+  tags:
+    - h150 # 必须要有，指定runner tag
+
+
+# deploy_staging:
+#   stage: deploy
+#   script:
+#     - echo "Deploy to staging server"
+#   environment:
+#     name: staging
+#     url: https://staging.example.com
+#   only:
+#   - master
+#   tags:
+#     - k8s # 必须要有，指定runner tag
+
+
+deploy_prod:
+  stage: deploy
+  script:
+    - echo "Deploy to production server"
+    - cid=$(docker ps -qa --filter name=${OBJNAME}_prod_$VERSION)
+    - if [ -n "${cid}" ];then docker rm -f ${cid};else echo "cid is null";fi
+    - docker -H $DOCKER_HOST run --env SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL} --name ${OBJNAME}_prod_$VERSION -p ${PORT}:7000 -d ${OBJNAME}:$VERSION
+  environment:
+    name: ${OBJNAME}_production_${VERSION}
+    url: http://172.16.4.110:${PORT}/docs
+  # when: manual
+  only:
+  - master
+  tags:
+    - h150 # 必须要有，指定runner tag

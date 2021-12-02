@@ -1,0 +1,10 @@
+"""
+映射数据视图类
+"""
+from sqlalchemy import Table
+from .database import metadata
+
+v_tree_dict_group = Table('v_tree_dict_group', metadata, autoload=True)
+v_tree_business_process = Table('v_tree_business_process', metadata, autoload=True)
+v_tree_standard_group = Table('v_tree_standard_group', metadata, autoload=True)
+v_tree_theme = Table('v_tree_theme', metadata, autoload=True) 

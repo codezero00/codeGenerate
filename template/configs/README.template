@@ -1,0 +1,3 @@
+# 数据规划_后端
+
+uvicorn openapi_server.main:app --host 0.0.0.0 --port 7000
