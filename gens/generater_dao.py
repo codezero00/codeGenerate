@@ -14,10 +14,13 @@ gen_file1 = template1.render({"data": ''})
 
 path = '../out/openapi_server/'
 path2 = '../out/openapi_server/dao/'
+path3 = '../out/openapi_server/models/'
 if not os.path.exists(path2):
     os.makedirs(path2)
 if not os.path.exists(path):
     os.makedirs(path)
+if not os.path.exists(path3):
+    os.makedirs(path3)
 with open(os.path.join(path, '__init__.py'), 'w', encoding='utf8') as f:
     f.write(gen_file1)
 with open(os.path.join(path, 'dao/__init__.py'), 'w', encoding='utf8') as f:
