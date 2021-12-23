@@ -18,6 +18,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from openapi_server.apis.{{item.name}}_api import router as {{item.name|str2BigHump}}ApiRouter
 {% endfor %}
 
+from openapi_server.apis.tree_api import router as TreeApiRouter
+from openapi_server.apis.custom_view_api import router as CustomViewApiRouter
+from openapi_server.security_api import router as SecurityApiRouter
+
 app = FastAPI(
     title="{{info.title}}",
     description="""{{info.description}}""",
@@ -39,6 +43,15 @@ app.add_middleware(
 {% for item in tags -%}
 app.include_router({{item.name|str2BigHump}}ApiRouter)
 {% endfor %}
+
+# 自定义查询
+app.include_router(CustomViewApiRouter)
+
+# 树查询
+app.include_router(TreeApiRouter)
+
+# 认证
+app.include_router(SecurityApiRouter)
 
 from starlette.exceptions import HTTPException
 from fastapi.responses import JSONResponse

@@ -61,3 +61,14 @@ if not os.path.exists(path):
     os.makedirs(path)
 with open(os.path.join(path, '.gitignore'), 'w', encoding='utf8') as f:
     f.write(gen_file5)
+
+
+# debug.template
+template6 = env.get_template('debug.template')
+gen_file6 = template5.render({"data": ''})
+
+path = '../out/'
+if not os.path.exists(path):
+    os.makedirs(path)
+with open(os.path.join(path, 'debug.py'), 'w', encoding='utf8') as f:
+    f.write(gen_file6)

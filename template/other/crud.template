@@ -45,25 +45,30 @@ class Crud:
             # schema = self.__SCHEMA.from_orm(one_res)
             return dict(page=p.GetDict, res=list_res)
 
-    def create(self, record):
+    def create(self, record, userid=None):
         record.id = next_id()
-        delattr(record, 'createtime')  # 删除createtime属性
-        delattr(record, 'updatetime')  # 删除updatetime属性
+        if userid is not None:
+            record.createuserid = userid
+        delattr(record, 'createtime') if hasattr(record, 'createtime') else None  # 删除createtime属性
+        delattr(record, 'updatetime') if hasattr(record, 'updatetime') else None  # 删除updatetime属性
         newRecord = self.__MODEL(**record.dict())
         self.__SESSION.add(newRecord)
         self.__SESSION.commit()
         self.__SESSION.refresh(newRecord)
         return newRecord
 
-    def update(self, id, record):
+    def update(self, id, record, userid=None):
         """
         修改一条数据
         :param id:
-        :param data:
+        :param record:
+        :param userid:
         :return:
         """
-        delattr(record, 'createtime')  # 删除createtime属性
-        delattr(record, 'updatetime')  # 删除updatetime属性
+        if userid is not None:
+            record.updateuserid = userid
+        delattr(record, 'createtime') if hasattr(record, 'createtime') else None  # 删除createtime属性
+        delattr(record, 'updatetime') if hasattr(record, 'updatetime') else None  # 删除updatetime属性
         self.__SESSION.query(self.__MODEL).filter(self.__MODEL.id == id).update(record.dict())
         self.__SESSION.commit()
         return record
@@ -85,3 +90,15 @@ class Crud:
         list_res = self.__SESSION.query(self.__MODEL).all()
         res = data_dict_pares_tree(list_res)
         return res
+
+    def call_proc(self, proc_name: str, params):
+        """
+        执行存储过程
+        """
+        engine = self.__SESSION.bind.engine
+        conn = engine.raw_connection()
+        cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+        cursor.execute(proc_name, params)
+        # list_res = self.__SESSION.execute(text('CALL proc_del_srcrecylevel(:p1)'), p1='0016395530371930d359089a3974300b632cf87057f3ec3000')
+        list_res = list(cursor.fetchall())
+        return list_res

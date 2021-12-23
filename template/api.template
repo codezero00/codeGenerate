@@ -73,7 +73,7 @@ async def {{item.method+'_'+item.key.replace('/{','_').replace('/','').replace('
     crud = Crud(session=db, model=model, schema=schema)
     res = crud.get_detail(id=id)
     if res is None:
-        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+        raise HTTPException(status_code=200, detail=dict(code=200, message="not Found"))
     return dict(code=200, data=res)
     {% elif item.method == "get" and item.key[-3:-1]!="id" %} ResponsePage:
     {# page查询 -#}
@@ -102,7 +102,7 @@ async def {{item.method+'_'+item.key.replace('/{','_').replace('/','').replace('
     crud = Crud(session=db, model=model, schema=schema)
     res = crud.get_detail(id={{tag_name}}.id)
     if res is None:
-        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+        raise HTTPException(status_code=200, detail=dict(code=200, message="not Found"))
     res = crud.update(id={{tag_name}}.id, record={{tag_name}})
     return dict(code=200, data=res)
     {% elif item.method == "delete" %} ResponseDel:
@@ -111,7 +111,7 @@ async def {{item.method+'_'+item.key.replace('/{','_').replace('/','').replace('
     crud = Crud(session=db, model=model, schema=schema)
     res = crud.delete(id=id)
     if res == 0:
-        raise HTTPException(status_code=404, detail=dict(code=404, message="not Found"))
+        raise HTTPException(status_code=200, detail=dict(code=200, message="not Found"))
     return dict(code=200)
     {% endif %}
 

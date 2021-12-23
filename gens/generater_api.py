@@ -4,7 +4,7 @@ import pandas as pd
 import os
 from utils import str2Hump, str2BigHump
 
-with open('../dlop_da.json', 'r', encoding='utf-8') as f:
+with open('../dlop_dp.json', 'r', encoding='utf-8') as f:
     json_str = f.read()
 
 struct = json.loads(json_str)
@@ -17,6 +17,7 @@ components = struct['components']
 
 # test123 = []
 for x in tags:
+    # x['name'] = x['name'].replace('/', '_')
     print(x['name'])
     test123 = []
     for i, n in paths.items():

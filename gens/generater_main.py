@@ -4,7 +4,7 @@ import os
 from utils import str2Hump, str2BigHump, openapiType2pydanticType
 
 
-with open('../dlop_da.json', 'r', encoding='utf-8') as f:
+with open('../dlop_dp.json', 'r', encoding='utf-8') as f:
     json_str = f.read()
 
 struct = json.loads(json_str)

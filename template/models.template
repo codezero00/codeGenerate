@@ -16,7 +16,7 @@ class {{data.key1|str2BigHump}}(BaseModel):
 
     """
 
-    {% for key, item in data.value1.items() %}{{key}}: {{item.type|openapiType2pydanticType}}
+    {% for key, item in data.value1.items() %}{{key}}: Optional[{{item.type|openapiType2pydanticType}}]
     {% endfor %}
 
 {{data.key1|str2BigHump}}.update_forward_refs()
