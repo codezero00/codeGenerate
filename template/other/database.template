@@ -4,9 +4,12 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.automap import automap_base
 
-# SQLALCHEMY_DATABASE_URL = "sqlite:///./sql_app.db"
-# SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root:zyjs2018!@172.16.4.110:3306/dlop_dp"
-SQLALCHEMY_DATABASE_URL = os.environ.get('SQLALCHEMY_DATABASE_URL', 'mysql+mysqlconnector://root:zyjs2018!@172.16.4.110:3306/dlop_dp')
+HOST = os.environ.get('HOST', '')
+DATABASE = os.environ.get('DATABASE', '')
+USER = os.environ.get('USER', 'root')
+PASSWORD = os.environ.get('PASSWORD', '')
+
+SQLALCHEMY_DATABASE_URL = f'mysql+pymysql://{USER}:{PASSWORD}@{HOST}:3306/{DATABASE}'
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -22,25 +25,3 @@ Base.prepare(engine, reflect=True)
 map_tables = Base.classes
 
 # atom_target = Base.classes.atom_target
-# business_process = Base.classes.business_process
-# business_target = Base.classes.business_target
-# composite_target = Base.classes.composite_target
-# data_model = Base.classes.data_model
-# derive_target = Base.classes.derive_target
-# dict = Base.classes.dict
-# dict_group = Base.classes.dict_group
-# dict_items = Base.classes.dict_items
-# dim_table = Base.classes.dim_table
-# dim_table_column = Base.classes.dim_table_column
-# fact_table = Base.classes.fact_table
-# fact_table_column = Base.classes.fact_table_column
-# # relation_table = Base.classes.relation_table
-# relation_table_column = Base.classes.relation_table_column
-# relation_table_column_has_tag = Base.classes.relation_table_column_has_tag
-# relation_table_gx = Base.classes.relation_table_gx
-# standard = Base.classes.standard
-# standard_group = Base.classes.standard_group
-# summary_table = Base.classes.summary_table
-# summary_table_column = Base.classes.summary_table_column
-# tag = Base.classes.tag
-# theme = Base.classes.theme

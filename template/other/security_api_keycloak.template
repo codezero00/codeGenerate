@@ -1,0 +1,97 @@
+# coding: utf-8
+
+from typing import List
+import logging
+
+from fastapi import Depends, Security, HTTPException, status, APIRouter  # noqa: F401
+from fastapi.openapi.models import OAuthFlowImplicit, OAuthFlows  # noqa: F401
+from fastapi.security import (  # noqa: F401
+    HTTPAuthorizationCredentials,
+    HTTPBasic,
+    HTTPBasicCredentials,
+    HTTPBearer,
+    OAuth2,
+    OAuth2AuthorizationCodeBearer,
+    OAuth2PasswordBearer,
+    SecurityScopes,
+)
+from fastapi.security.api_key import APIKeyCookie, APIKeyHeader, APIKeyQuery  # noqa: F401
+
+from openapi_server.models.extra_models import TokenModel
+
+# Keycloak setup
+from keycloak import KeycloakOpenID
+
+
+router = APIRouter()
+
+keycloak_url = "http://172.16.4.151:8080/auth/"
+realm = "bigdata"
+client = "mic_localhost"
+
+keycloak_openid = KeycloakOpenID(
+    server_url=keycloak_url,
+    client_id=client,
+    realm_name=realm
+)
+
+oauth2_scheme = OAuth2AuthorizationCodeBearer(
+    authorizationUrl=f"{keycloak_url}realms/{realm}/protocol/openid-connect/auth",
+    tokenUrl=f"{keycloak_url}realms/{realm}/protocol/openid-connect/token",
+)
+
+
+async def get_current_user(token: str = Depends(oauth2_scheme)):
+    try:
+        KEYCLOAK_PUBLIC_KEY = (
+                "-----BEGIN PUBLIC KEY-----\n"
+                + keycloak_openid.public_key()
+                + "\n-----END PUBLIC KEY-----"
+        )
+        return keycloak_openid.decode_token(
+            token,
+            key=KEYCLOAK_PUBLIC_KEY,
+            options={"verify_signature": True, "verify_aud": False, "exp": True},
+        )
+    except Exception as e:
+        logging.error(e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+async def get_current_userid(token: str = Depends(oauth2_scheme)) -> str:
+    """获取用户编号 用户主键"""
+    try:
+        KEYCLOAK_PUBLIC_KEY = (
+                "-----BEGIN PUBLIC KEY-----\n"
+                + keycloak_openid.public_key()
+                + "\n-----END PUBLIC KEY-----"
+        )
+        user_info = keycloak_openid.decode_token(
+            token,
+            key=KEYCLOAK_PUBLIC_KEY,
+            options={"verify_signature": True, "verify_aud": False, "exp": True},
+        )
+        return user_info['family_name']
+    except Exception as e:
+        logging.error(e)
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+
+@router.get("/user")
+async def get_user(current_user: dict = Depends(get_current_user)):
+    logging.info(current_user)
+    return current_user
+
+
+@router.get("/user_id")
+async def get_user_id(current_user_id: str = Depends(get_current_userid)):
+    logging.info(current_user_id)
+    return current_user_id

@@ -1,97 +1,334 @@
-# coding: utf-8
+import json
+from datetime import datetime, timedelta
+from typing import Optional
 
-from typing import List
-import logging
+from fastapi import Depends, Security, HTTPException, status, APIRouter, Query  # noqa: F401
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from pydantic import BaseModel
 
-from fastapi import Depends, Security, HTTPException, status, APIRouter  # noqa: F401
-from fastapi.openapi.models import OAuthFlowImplicit, OAuthFlows  # noqa: F401
-from fastapi.security import (  # noqa: F401
-    HTTPAuthorizationCredentials,
-    HTTPBasic,
-    HTTPBasicCredentials,
-    HTTPBearer,
-    OAuth2,
-    OAuth2AuthorizationCodeBearer,
-    OAuth2PasswordBearer,
-    SecurityScopes,
-)
-from fastapi.security.api_key import APIKeyCookie, APIKeyHeader, APIKeyQuery  # noqa: F401
-
-from openapi_server.models.extra_models import TokenModel
-
-# Keycloak setup
-from keycloak import KeycloakOpenID
-
-
+from openapi_server.models.response_page import ResponsePage
+from openapi_server.models.extra_models import TokenModel as User
+from openapi_server.dao.crud import Crud
+from openapi_server.dao.database import SessionLocal, map_tables
+from openapi_server.dao.view_class import *
+from sqlalchemy.orm import Session
 router = APIRouter()
 
-keycloak_url = "http://172.16.4.151:8080/auth/"
-realm = "bigdata"
-client = "mic_localhost"
 
-keycloak_openid = KeycloakOpenID(
-    server_url=keycloak_url,
-    client_id=client,
-    realm_name=realm
-)
-
-oauth2_scheme = OAuth2AuthorizationCodeBearer(
-    authorizationUrl=f"{keycloak_url}realms/{realm}/protocol/openid-connect/auth",
-    tokenUrl=f"{keycloak_url}realms/{realm}/protocol/openid-connect/token",
-)
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 300
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+# fake_users_db = {
+#     "johndoe": {
+#         "username": "johndoe",
+#         "full_name": "John Doe",
+#         "email": "johndoe@example.com",
+#         "hashed_password": "$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW",
+#         "disabled": False,
+#     }
+# }
+
+
+# Dependency
+def get_db():
+    db = SessionLocal()
     try:
-        KEYCLOAK_PUBLIC_KEY = (
-                "-----BEGIN PUBLIC KEY-----\n"
-                + keycloak_openid.public_key()
-                + "\n-----END PUBLIC KEY-----"
-        )
-        return keycloak_openid.decode_token(
-            token,
-            key=KEYCLOAK_PUBLIC_KEY,
-            options={"verify_signature": True, "verify_aud": False, "exp": True},
-        )
-    except Exception as e:
-        logging.error(e)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        yield db
+    finally:
+        db.close()
 
 
-async def get_current_userid(token: str = Depends(oauth2_scheme)) -> str:
-    """获取用户编号 用户主键"""
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None
+
+
+# class User(BaseModel):
+#     username: str
+#     email: Optional[str] = None
+#     full_name: Optional[str] = None
+#     disabled: Optional[bool] = None
+
+
+class UserInDB(User):
+    # hashed_password: str
+    UserPassword: Optional[str]
+
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+
+# def verify_password(plain_password, hashed_password):
+#     return pwd_context.verify(plain_password, hashed_password)
+
+def verify_password(plain_password, password):
+    if plain_password == password:
+        return True
+    else:
+        return False
+
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
+
+
+def get_user(dbsession, username: str):
+    ########## 查询用户信息
+    model = v_sys_userinfo
+    schema = ''
+    crud = Crud(session=dbsession, model=model, schema=schema)
+    where = {"text": " UserAccout = :p1 ", "params": {"p1": username}}
+    res = crud.get_page_list(current_page=1, page_size=1, where=where, order='')
+    ##
+    db = dict()   # dict(username=res['res'][0]._mapping)
+    db[username] = res['res'][0]._mapping
+    ##########
+    if username in db:
+        user_dict = db[username]
+        return UserInDB(**user_dict)
+
+
+def authenticate_user(dbsession, username: str, password: str):
+    user = get_user(dbsession, username)
+    if not user:
+        return False
+    if not verify_password(password, user.UserPassword):
+        return False
+    return user
+
+
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+
+async def get_current_user(token: str = Depends(oauth2_scheme), dbsession: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        # status_code=status.HTTP_401_UNAUTHORIZED,
+        # detail="Could not validate credentials",
+        # headers={"WWW-Authenticate": "Bearer"},
+        status_code=200,
+        detail=dict(code=401002, message=f'无法验证凭据（token）'),
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
-        KEYCLOAK_PUBLIC_KEY = (
-                "-----BEGIN PUBLIC KEY-----\n"
-                + keycloak_openid.public_key()
-                + "\n-----END PUBLIC KEY-----"
-        )
-        user_info = keycloak_openid.decode_token(
-            token,
-            key=KEYCLOAK_PUBLIC_KEY,
-            options={"verify_signature": True, "verify_aud": False, "exp": True},
-        )
-        return user_info['family_name']
-    except Exception as e:
-        logging.error(e)
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid authentication credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        token_data = TokenData(username=username)
+    except JWTError:
+        raise credentials_exception
+    user = get_user(dbsession, username=token_data.username)
+    if user is None:
+        raise credentials_exception
+    return user
 
 
-@router.get("/user")
-async def get_user(current_user: dict = Depends(get_current_user)):
-    logging.info(current_user)
+async def get_current_active_user(current_user: User = Depends(get_current_user)):
+    if current_user.UserStatus:
+        raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
 
-@router.get("/user_id")
-async def get_user_id(current_user_id: str = Depends(get_current_userid)):
-    logging.info(current_user_id)
-    return current_user_id
+@router.post("/token", response_model=Token)
+async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    dbsession = db
+    user = authenticate_user(dbsession, form_data.username, form_data.password)
+    if not user:
+        # raise HTTPException(
+        #     status_code=status.HTTP_401_UNAUTHORIZED,
+        #     detail="Incorrect username or password",
+        #     headers={"WWW-Authenticate": "Bearer"},
+        # )
+        raise HTTPException(
+            status_code=200,
+            detail=dict(code=401001, message=f'用户名或密码不正确'),
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.UserAccout}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@router.get("/users/me")  # , response_model=User)
+async def read_users_me(current_user: User = Depends(get_current_active_user)):
+    # return current_user
+    return dict(code=200, data=current_user)
+
+
+# @router.get("/users/me/items")
+# async def read_own_items(current_user: User = Depends(get_current_active_user)):
+#     return [{"item_id": "Foo", "owner": current_user.UserAccout}]
+
+
+@router.get("/menus")
+async def get_menus(
+        group: str = Query(None, description="菜单分组 ''所有，2 运维报告,3 运维分析"),
+        current_user: User = Depends(get_current_active_user),
+        db: Session = Depends(get_db)
+):
+    """
+    获取菜单信息
+    """
+    if group:
+        group_sql_text = f"and MGroup in (1,{group}) "
+    else:
+        group_sql_text = ""
+
+    _userinfo = current_user
+    schema = ''
+    model = v_deptmenus_join_menu
+    try:
+        where = {"text": f" DeptId = :p1 {group_sql_text} ", "params": {"p1": _userinfo.DeptId}}
+        crud = Crud(session=db, model=model, schema=schema)
+        res2 = crud.get_page_list(current_page=1, page_size=99, where=where, order='')
+        return dict(code=200, data=res2['res'])
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'请求错误： {e}'))
+
+
+# ############################# 免密登陆
+from Crypto.Cipher import AES
+from openapi_server.cls_aes import AEScryptor
+
+
+@router.get(
+    "/nopasswd_login",
+    responses={
+        200: {"model": ResponsePage, "description": "成功"},
+    },
+    tags=["免登陆"],
+    summary="免登录返回token",
+)
+async def get_nopasswd_login(
+        token: str = Query(None, description="密钥"),
+        db: Session = Depends(get_db)
+):
+    """查询人员考勤评分"""
+    key = b"09d252556c818e094faa6ca166b7956a"
+    iv = b"0000000000000000"
+    aes = AEScryptor(key, AES.MODE_CBC, iv, paddingMode="ZeroPadding", characterSet='utf-8')  # 实例化AEScryptor类
+    # 密文 FQuIZ5paif2k22qimiL06w==
+    try:
+        rData = aes.decryptFromBase64(token)
+        print("明文：", rData)
+        account_list = str(rData).split("#")
+        username = account_list[0]
+        password = account_list[1]
+        print(username, password)
+
+        # 同上login_for_access_token 根据账号密码获取token
+        dbsession = db
+        user = authenticate_user(dbsession, username, password)
+        if not user:
+            raise HTTPException(
+                status_code=200,
+                detail=dict(code=401001, message=f'用户名或密码不正确'),
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={"sub": user.UserAccout}, expires_delta=access_token_expires
+        )
+        return {"code": 200, "access_token": access_token, "token_type": "bearer"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'token错误： {e}'))
+
+
+# ############################# 单点登录
+
+import httpx
+import os
+
+@router.get(
+    "/sso_login",
+    responses={
+        200: {"model": ResponsePage, "description": "成功"},
+    },
+    tags=["单点登陆"],
+    summary="单点登录返回token",
+)
+async def get_sso_login(
+        token: str = Query(None, description="密钥"),
+        db: Session = Depends(get_db)
+):
+    """单点登录返回token"""
+
+    try:
+        ssourl = os.environ.get('SSOURL', 'http://x.x.x.x:1323')
+        url = f"""{ssourl}/auth/getUserInfo"""
+        headers = {'token': f'{token}'}
+        r = httpx.post(url, headers=headers)
+        username = json.loads(r.text)['data']['account']
+        user = get_user(db, username)
+        if not user:
+            raise HTTPException(
+                status_code=200,
+                detail=dict(code=401001, message=f'token错误,用户不存在'),
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        password = user.UserPassword
+
+        # 同上login_for_access_token 根据账号密码获取token
+        dbsession = db
+        user = authenticate_user(dbsession, username, password)
+        if not user:
+            raise HTTPException(
+                status_code=200,
+                detail=dict(code=401001, message=f'用户名或密码不正确'),
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        access_token = create_access_token(
+            data={"sub": user.UserAccout}, expires_delta=access_token_expires
+        )
+        return {"code": 200, "access_token": access_token, "token_type": "bearer"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'token错误： {e}'))
+
+
+
+@router.get(
+    "/sso_logout",
+    responses={
+        200: {"model": ResponsePage, "description": "成功"},
+    },
+    tags=["单点登陆"],
+    summary="单点登录-登出",
+)
+async def get_sso_login(
+        token: str = Query(None, description="密钥"),
+        # db: Session = Depends(get_db)
+):
+    """单点登录-登出"""
+    try:
+        ssourl = os.environ.get('SSOURL', 'http://x.x.x.x:1323')
+        url = f"""{ssourl}/api/v1/ums/logout"""
+        headers = {'token': f'{token}'}
+        r = httpx.get(url, headers=headers)
+        data = json.loads(r.text)['data']
+        return dict(code=200, data=data)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=dict(code=400, message=f'token错误： {e}'))
+
